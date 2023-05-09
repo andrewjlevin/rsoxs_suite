@@ -6,6 +6,7 @@ sample_sets_info.xlsx
 /imgs_analysis/sim_datasets
 /imgs_analysis/processed_data
 /morph_gen/sim_morphs/*
+/morph_gen/matlab_Spinodal-Decomposition/*
 /beamline_data/*
 .DS_Store
 __pycache__
