@@ -9,3 +9,4 @@ sample_sets_info.xlsx
 /beamline_data/*
 .DS_Store
 __pycache__
+test*
