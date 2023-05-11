@@ -2,9 +2,10 @@
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
 sample_sets_info.xlsx
-/imgs_analysis/zarr_datasets
+/imgs_analysis/zarr_datasets*
 /imgs_analysis/sim_datasets
 /imgs_analysis/processed_data
+/imgs_analysis/sim_runs*
 /morph_gen/sim_morphs/*
 /beamline_data/*
 .DS_Store
