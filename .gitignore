@@ -8,3 +8,4 @@ sample_sets_info.xlsx
 .DS_Store
 __pycache__
 test*
+job*
