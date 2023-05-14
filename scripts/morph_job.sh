@@ -2,12 +2,14 @@
 
 #SBATCH --account=ucb349_asc1
 #SBATCH --partition=amilan
-#SBATCH --nodes=4
-#SBATCH --ntasks=100
-#SBATCH --time=00:10:00
+#SBATCH --nodes=3
+#SBATCH --ntasks=96
+#SBATCH --time=14:00:00
 #SBATCH --job-name=fipy_morph_gen     
 #SBATCH --output=fipy_morph_gen.%j.out 
 #SBATCH --error=fipy_morph_gen.%j.out  
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=anle1278@colorado.edu
 
 # load necessary modules
 module purge
