@@ -67,9 +67,11 @@ def gen_2d(nxy=200, dxy=1.5, mean=0.5, D=1., a=1., eps=1., steps=500, savePath=s
 
     data = phi.copy().globalValue.reshape((nxy, nxy))
     np.savetxt(modPath.joinpath(f'BHJ_{elapsed}steps.txt'), data)
-    plt.imshow(data, origin='lower', cmap=cmap, extent=(0, int(nxy*dxy), 0, int(nxy*dxy)))
+    plt.imshow(data, origin='lower', cmap=cmap, extent=(0, int(nxy*dxy), 0, int(nxy*dxy)),
+               vmin=0, vmax=1)
+    plt.title(f'{nxy}x{nxy} pixels, D={D}, a={a}. epsilon={eps}, {elapsed}steps')
     plt.colorbar(label='phi')
-    plt.savefig(modPath.joinpath(f'BHJ_{elapsed}steps.png'))
+    plt.savefig(modPath.joinpath(f'BHJ_{elapsed}steps.png'), dpi=200)
     plt.close('all')
 
     time_0 = time.time()
@@ -91,9 +93,11 @@ def gen_2d(nxy=200, dxy=1.5, mean=0.5, D=1., a=1., eps=1., steps=500, savePath=s
             # viewer.plot(modPath.joinpath(f'BHJ_{elapsed}steps.png'))
             data = phi.copy().globalValue.reshape((nxy, nxy))
             np.savetxt(modPath.joinpath(f'BHJ_{elapsed}steps.txt'), data)
-            plt.imshow(data, origin='lower', cmap=cmap, extent=(0, int(nxy*dxy), 0, int(nxy*dxy)))
+            plt.imshow(data, origin='lower', cmap=cmap, extent=(0, int(nxy*dxy), 0, int(nxy*dxy)),
+                       vmin=0, vmax=1)
+            plt.title(f'{nxy}x{nxy} pixels, D={D}, a={a}. epsilon={eps}, {elapsed}steps')
             plt.colorbar(label='phi')
-            plt.savefig(modPath.joinpath(f'BHJ_{elapsed}steps.png'))
+            plt.savefig(modPath.joinpath(f'BHJ_{elapsed}steps.png'), dpi=200)
             plt.close('all')
 
     print(f'Done with {nxy}pix gen!')
@@ -165,11 +169,11 @@ def gen_3d(nxy=200, nz=10, dxy=1.5, dz=1.5, mean=0.5, D=1., a=1., eps=1., steps=
             dt = 5
         elif elapsed < 500:
             dt = 10
-        else: 
+        else:
             dt = 20
         elapsed += dt  
         eq.solve(phi, dt=dt, solver=DefaultSolver(precon=None))
-        if elapsed in (3, 10, 30, 50, 100, 200, 300, 400, 500, steps):
+        if elapsed in (3, 10, 30, 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, steps):
             print(f'{elapsed} time steps in {np.round((time.time() - time_0), 1)} seconds!')
             data = phi.copy().globalValue.reshape((nz, nxy, nxy))
             np.save(modPath.joinpath(f'BHJ_{elapsed}steps.npy'), data)
@@ -191,23 +195,43 @@ def gen_3d(nxy=200, nz=10, dxy=1.5, dz=1.5, mean=0.5, D=1., a=1., eps=1., steps=
     print(f'Done with {nxy}x{nz}vox gen!')
 
 if __name__ == '__main__':
-    nxy = 134
-    nz = 10
-    # dxy = 1.5
-    # dz = 1.5
+    # nxy = 632
+    dxy = 1.5
     mean = 0.5
     D = a = 1.0
-    # eps = 1.0
-    steps = 600
+    eps = 1.1
+    steps = 800
     counter = 1
 
     # gen_3d(nxy=nxy, nz=nz, dxy=dxy, dz=dz, mean=mean, D=D, a=a, eps=eps, steps=steps, counter=counter)
 
-    for dxy in [1.3, 1.4, 1.6]:
-        for dz in [1.5, 1.7, 2.0]:
-            for eps in [1.0, 2.0]:
-                gen_3d(nxy=nxy, nz=nz, dxy=dxy, dz=dz, mean=mean, D=D, a=a, eps=eps, steps=steps, counter=counter)
+    # for eps in [1.0, 1.1]:
+    #     for a in [0.5, 0.7, 1.0]:
+    #         gen_2d(nxy=nxy, dxy=dxy, mean=mean, D=D, a=a, eps=eps, steps=steps, counter=counter)
+
+    nxy = 134
+    nz = 10
+    # dz = 1.5
+    for eps in [1.1]:
+        for a in [0.7]:
+            for dz in [2.0]:
+                for counter in [1, 2, 3]:
+                    gen_3d(nxy=nxy, nz=nz, dxy=dxy, dz=dz, mean=mean, D=D, a=a, eps=eps, steps=steps, counter=counter)
+
+        # for eps in [1.0, 1.1]:
+        #     for a in [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]:
+
+
+    # for dxy in [1.5]:
+    #     for dz in [1.5]:
+    #         for eps in [1.0]:
+    #             for a in [0.9]:
+    #                 gen_3d(nxy=nxy, nz=nz, dxy=dxy, dz=dz, mean=mean, D=D, a=a, eps=eps, steps=steps, counter=counter)
 
     # for nxy in [632]:
-    #     for counter in [2]:
-    #         gen_2d(nxy=nxy, dxy=dxy, mean=mean, D=D, a=a, eps=eps, steps=steps, counter=counter)
+    #     for counter in [1]:
+    #         for eps in [1.0]:
+    #             for a in [0.9]:
+    #         # for eps in [1.0, 1.1]:
+    #         #     for a in [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]:
+    #                 gen_2d(nxy=nxy, dxy=dxy, mean=mean, D=D, a=a, eps=eps, steps=steps, counter=counter)

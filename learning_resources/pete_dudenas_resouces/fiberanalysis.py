@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import pySPM
+# import pySPM
 
 from skimage.morphology import skeletonize,binary_erosion, binary_dilation, binary_opening, binary_closing,square, thin, remove_small_objects, medial_axis
 from skimage.measure import label, regionprops

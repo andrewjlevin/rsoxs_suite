@@ -9,4 +9,8 @@ sample_sets_info.xlsx
 __pycache__
 test*
 job*
+<<<<<<< HEAD
 *.pptx
+=======
+mask*
+>>>>>>> c0a55eb84c3d9ca658cb3eec1489f1b7dbec0e47
