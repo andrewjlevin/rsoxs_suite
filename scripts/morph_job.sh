@@ -1,15 +1,15 @@
 #!/bin/bash 
 
-# not a directive this time #SBATCH --account=ucb349_asc1
-#SBATCH --partition=ami100
+#SBATCH --account=ucb349_asc1
+#SBATCH --partition=amilan
 #SBATCH --nodes=4
 #SBATCH --ntasks=208
-#SBATCH --time=01:30:00
+#SBATCH --time=00:10:00
 #SBATCH --job-name=fipy_morph_gen     
 #SBATCH --output=fipy_morph_gen.%j.out 
 #SBATCH --error=fipy_morph_gen.%j.out  
-# not a directive SBATCH --mail-type=ALL
-# not a directive SBATCH --mail-user=anle1278@colorado.edu
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=anle1278@colorado.edu
 
 # load necessary modules
 module purge

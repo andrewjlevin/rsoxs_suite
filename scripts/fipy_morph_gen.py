@@ -195,13 +195,16 @@ def gen_3d(nxy=200, nz=10, dxy=1.5, dz=1.5, mean=0.5, D=1., a=1., eps=1., steps=
     print(f'Done with {nxy}x{nz}vox gen!')
 
 if __name__ == '__main__':
-    # nxy = 632
-    dxy = 1.5
+    nxy = 632
+    dxy = 0.2
     mean = 0.5
     D = a = 1.0
-    eps = 1.1
+    eps = 1.0
     steps = 800
     counter = 1
+
+    gen_2d(nxy=nxy, dxy=dxy, mean=mean, D=D, a=a, eps=eps, steps=steps, counter=counter)
+
 
     # gen_3d(nxy=nxy, nz=nz, dxy=dxy, dz=dz, mean=mean, D=D, a=a, eps=eps, steps=steps, counter=counter)
 
@@ -209,14 +212,14 @@ if __name__ == '__main__':
     #     for a in [0.5, 0.7, 1.0]:
     #         gen_2d(nxy=nxy, dxy=dxy, mean=mean, D=D, a=a, eps=eps, steps=steps, counter=counter)
 
-    nxy = 134
-    nz = 10
-    # dz = 1.5
-    for eps in [1.1]:
-        for a in [0.7]:
-            for dz in [2.0]:
-                for counter in [1, 2, 3]:
-                    gen_3d(nxy=nxy, nz=nz, dxy=dxy, dz=dz, mean=mean, D=D, a=a, eps=eps, steps=steps, counter=counter)
+    # nxy = 134
+    # nz = 10
+    # # dz = 1.5
+    # for eps in [1.1]:
+    #     for a in [0.7]:
+    #         for dz in [2.0]:
+    #             for counter in [1, 2, 3]:
+    #                 gen_3d(nxy=nxy, nz=nz, dxy=dxy, dz=dz, mean=mean, D=D, a=a, eps=eps, steps=steps, counter=counter)
 
         # for eps in [1.0, 1.1]:
         #     for a in [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]:
