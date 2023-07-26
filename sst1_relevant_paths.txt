@@ -1,0 +1,5 @@
+# Destination folders:
+/nsls2/users/alevin/rsoxs_suite
+
+# Destination / source folders:
+/nsls2/data/sst/proposals/2023-2/pass-311130
