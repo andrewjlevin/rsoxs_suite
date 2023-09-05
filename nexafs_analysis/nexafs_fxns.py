@@ -24,7 +24,7 @@ def read_NEXAFS(scan_num, base, detector='WAXS'):
         list(pathlib.Path(base, scan_num).glob('*Sample Current*.csv'))[0])
     primary = pd.read_csv(list(base.glob(scan_num + '*primary.csv'))[0])
     beamstop = pd.read_csv(
-        list(pathlib.Path(base, scan_num).glob(f'*{detector}*monitor.csv'))[0])
+        list(pathlib.Path(base, scan_num).glob(f'*{detector}*Beamstop*monitor.csv'))[0])
     return primary, mesh, sample_current, beamstop
 
 
