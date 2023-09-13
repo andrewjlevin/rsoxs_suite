@@ -41,13 +41,13 @@ def mse_line_tilt(my_vars, pi_peak_areas, theta_list):
     return ((const * i_nexafs(alpha, theta_list) - pi_peak_areas)**2).sum()
 
 
-def run_tilt_fit(e_min, e_max, nexafs, plot=True, savePath=None, savename=None):
+def run_tilt_fit(e_min, e_max, nf_DA, plot=True, savePath=None, savename=None):
     """
     Runs mse_line_tilt over selected energy region of entered nexafs xarray.
 
     """
-    pi_peak_areas = int_area(e_min, e_max, nexafs)
-    theta_list = nexafs['theta'].values
+    pi_peak_areas = int_area(e_min, e_max, nf_DA)
+    theta_list = nf_DA['theta'].values
 
     bnds = [(0, 90), (0, 20)]
     res = optimize.differential_evolution(
@@ -59,14 +59,14 @@ def run_tilt_fit(e_min, e_max, nexafs, plot=True, savePath=None, savename=None):
         # Plot intensities from Stöhr 9.16a (scaled with fitted constant) as line
         # along with measured pi_peak_areas, x-axis is cos_sq_theta:
         fig, axs = plt.subplots(ncols=2, figsize=(15,3), dpi=120)
-        fig.suptitle(sample_name, y=1.03, fontsize=14)
-        axs[0].plot(nexafs.cos_sq_theta.values[:], const * i_nexafs(alpha, nexafs.theta.values[:]),
+        fig.suptitle(str(nf_DA.sample_name.values), y=1.03, fontsize=14)
+        axs[0].plot(nf_DA.cos_sq_theta.values[:], const * i_nexafs(alpha, nf_DA.theta.values[:]),
                 marker='o', label=f'Stöhr 9.16a: ($\\alpha$={np.round(alpha,2)}, const={np.round(const,2)})',
                 clip_on=False, zorder=3)
-        axs[0].plot(nexafs.cos_sq_theta.values[:], pi_peak_areas[:], marker='o',
+        axs[0].plot(nf_DA.cos_sq_theta.values[:], pi_peak_areas[:], marker='o',
                 label=f'NEXAFS integrated areas', clip_on=False, zorder=4)
         axs[0].set(title='Peak fit', xlabel=r'$cos^2(\theta)$', ylabel='Intensity [arb. units]')
-        axs[0].set_xticks(nexafs.cos_sq_theta.values, minor=True)
+        axs[0].set_xticks(nf_DA.cos_sq_theta.values, minor=True)
         axs[0].set_xlim(left=0)
         axs[0].legend(loc='upper left')
         
@@ -79,13 +79,13 @@ def run_tilt_fit(e_min, e_max, nexafs, plot=True, savePath=None, savename=None):
 
         ax2 = axs[0].secondary_xaxis(-0.23, functions=(forward, inverse))
         ax2.set(xlabel=r'$\theta$ [$\degree$]')
-        ax2.set_xticks(nexafs.theta.values)
+        ax2.set_xticks(nf_DA.theta.values)
         
         
-        colors = plt.get_cmap('plasma_r')(np.linspace(0.15,1,len(nexafs.theta)))
+        colors = plt.get_cmap('plasma_r')(np.linspace(0.15,1,len(nf_DA.theta)))
         # fig, ax = plt.subplots(figsize=(6,4), dpi=120)
-        for i, theta_val in enumerate(nexafs.theta.values):
-            (nexafs.sel(theta=theta_val, energy=slice(281, 293))
+        for i, theta_val in enumerate(nf_DA.theta.values):
+            (nf_DA.sel(theta=theta_val, energy=slice(281, 293))
                    .plot.line(ax=axs[1], color=colors[i], label=f'{int(theta_val)}°'))
 
         axs[1].axvline(e_min, color='grey')
