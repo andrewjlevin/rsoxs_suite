@@ -131,13 +131,13 @@ def run_kkcalc(nexafs_xr, x_min=280, x_max=340, chemical_formula='C82H86F4N8O2S5
         ASF_E, np.vstack((ASF_Data, ASF_Data[-1])))
     # Conversion to delta and beta and making an xarray
     n = xr.Dataset({
-        'δ': (['energy'], data.convert_data(output[:, [0, 1]], 'ASF', 'refractive_index', Density=density, Formula_Mass=formula_mass)[:, 1]),
-        'β': (['energy'], data.convert_data(output[:, [0, 2]], 'ASF', 'refractive_index', Density=density, Formula_Mass=formula_mass)[:, 1])},
+        'delta': (['energy'], data.convert_data(output[:, [0, 1]], 'ASF', 'refractive_index', Density=density, Formula_Mass=formula_mass)[:, 1]),
+        'beta': (['energy'], data.convert_data(output[:, [0, 2]], 'ASF', 'refractive_index', Density=density, Formula_Mass=formula_mass)[:, 1])},
         coords={'energy': data.convert_data(output[:, [0, 1]], 'ASF', 'refractive_index', Density=density, Formula_Mass=formula_mass)[:, 0]})
 
     n.energy.attrs['unit'] = 'eV'
-    n.δ.attrs['unit'] = 'a.u.'
-    n.β.attrs['unit'] = 'a.u.'
+    n.delta.attrs['unit'] = 'a.u.'
+    n.beta.attrs['unit'] = 'a.u.'
 
     os.remove('scratch_nexafs.txt')
     return n  # return an xarray
@@ -164,29 +164,29 @@ def show_diel(xmin, xmax, n, save=False, savepath=None):
     colors2 = plt.cm.plasma(np.linspace(0, 0.8, n.cos_sq_theta.size))
 
     for i, cos_sq_theta in enumerate(n.cos_sq_theta):
-        n.δ.sel(cos_sq_theta=cos_sq_theta).plot(
+        n.delta.sel(cos_sq_theta=cos_sq_theta).plot(
             ax=ax1, color=colors[i], lw=2, label=f'{n.theta[i].values}°')
-        n.β.sel(cos_sq_theta=cos_sq_theta).plot(
+        n.beta.sel(cos_sq_theta=cos_sq_theta).plot(
             ax=ax2, color=colors2[i], lw=2, label=f'{n.theta[i].values}°')
 
     # note it is also possible to plot without an iterator using xarray's multidimensional "hue" argument as shown below, but the above allows me more control over the colors & labels.
-    #n.δ.plot(ax=ax1, hue='angle')
+    #n.delta.plot(ax=ax1, hue='angle')
 
-    ymin1 = n.δ.sel(energy=slice(xmin, xmax)).min()
-    ymax1 = n.δ.sel(energy=slice(xmin, xmax)).max()
+    ymin1 = n.delta.sel(energy=slice(xmin, xmax)).min()
+    ymax1 = n.delta.sel(energy=slice(xmin, xmax)).max()
     ax1.set_xlim(xmin, xmax)
     ax1.set_xlabel('')
     ax1.set_ylim(ymin1 - (ymax1 - ymin1) * 0.03,
                  ymax1 + (ymax1 - ymin1) * 0.03)
     ax1.legend(loc='lower right')
-    ax1.set_title('δ')
+    ax1.set_title('delta')
 
-    ymax2 = n.β.sel(energy=slice(xmin, xmax)).max()
+    ymax2 = n.beta.sel(energy=slice(xmin, xmax)).max()
 
     ax2.legend(loc='upper right')
     ax2.set_xlim(xmin, xmax)
     ax2.set_ylim(0, ymax2 + (ymax2) * 0.03)
-    ax2.set_title('β')
+    ax2.set_title('beta')
     plt.setp(ax1.get_xticklabels(), visible=False)
 
     if save == True:
