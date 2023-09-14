@@ -109,7 +109,7 @@ def run_kkcalc(nexafs_xr, x_min=280, x_max=340, chemical_formula='C82H86F4N8O2S5
 
     # save xarray as disposable text file 'scratch_nexafs.txt'
     np.savetxt('scratch_nexafs.txt',  np.c_[
-               nexafs_xr.energy.values, nexafs_xr.electron_yield.values])
+               nexafs_xr.energy.values, nexafs_xr.values])
 
     # The output of kk.kk_calculate_real is f1 and f2 terms since they are calculated using Kramers-Kronig transform
 
@@ -145,12 +145,13 @@ def run_kkcalc(nexafs_xr, x_min=280, x_max=340, chemical_formula='C82H86F4N8O2S5
 
 def run_kkcalc_a(nexafs_xr, x_min=280, x_max=340, chemical_formula='C82H86F4N8O2S5', density=1.1):
     n = []
+    nexafs_xr = nexafs_xr.swap_dims({'theta':'cos_sq_theta'})
     for cos_sq_theta in nexafs_xr.cos_sq_theta:
         n.append(run_kkcalc(nexafs_xr.sel(cos_sq_theta=cos_sq_theta), x_min=x_min,
                  x_max=x_max, chemical_formula=chemical_formula, density=density))
     n = xr.concat(n, dim=nexafs_xr.cos_sq_theta)
     n = n.assign_coords(theta=('cos_sq_theta', nexafs_xr.theta.values))
-    n.attrs['name'] = nexafs_xr.name
+    n.attrs['name'] = 'optical constants'
     return n
 
 
