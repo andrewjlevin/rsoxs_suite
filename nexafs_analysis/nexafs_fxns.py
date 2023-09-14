@@ -41,7 +41,7 @@ def mse_line_tilt(my_vars, pi_peak_areas, theta_list):
     return ((const * i_nexafs(alpha, theta_list) - pi_peak_areas)**2).sum()
 
 
-def run_tilt_fit(e_min, e_max, nf_DA, plot=True, savePath=None, savename=None):
+def run_tilt_fit(e_min, e_max, nf_DA, plot=True, savePath=None):
     """
     Runs mse_line_tilt over selected energy region of entered nexafs xarray.
 
@@ -93,8 +93,8 @@ def run_tilt_fit(e_min, e_max, nf_DA, plot=True, savePath=None, savename=None):
         axs[1].set(title='NEXAFS', xlabel='X-ray Energy [eV]', ylabel='Normalized NEXAFS [arb. units]')
         axs[1].legend(title=r'$\theta$ [$\degree$]', loc='upper left')
         
-        if savePath is not None and savename is not None:
-            plt.savefig(savePath.joinpath(f'{savename}.png'), dpi=120)
+        if savePath is not None:
+            fig.savefig(savePath, dpi=120)
 
         plt.show()
             
