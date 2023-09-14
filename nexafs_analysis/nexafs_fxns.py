@@ -97,6 +97,8 @@ def run_tilt_fit(e_min, e_max, nf_DA, plot=True, savePath=None):
             fig.savefig(savePath, dpi=120)
 
         plt.show()
+
+        return fig, axs, res
             
     return res
 
