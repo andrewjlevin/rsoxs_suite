@@ -2,7 +2,7 @@
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
 sample_sets_info.xlsx
-*/imgs_analysis*
+*imgs_analysis*
 /morph_gen/sim_morphs/*
 /beamline_data/*
 .DS_Store
