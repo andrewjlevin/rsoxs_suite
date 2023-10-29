@@ -1,6 +1,0 @@
-# Destination folders:
-/nsls2/users/alevin/rsoxs_suite
-
-# Destination / source folders:
-/nsls2/data/sst/proposals/2023-2/pass-311130  # proposal path for Jul 2023 SST1 
-/nsls2/data/sst/proposals/2022-2/pass-309180  # proposal path for Aug 2022 SST1
