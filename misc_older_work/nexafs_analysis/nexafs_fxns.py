@@ -220,8 +220,8 @@ def evaluate_nexafs_fit(nexafs, nexafs_fit, new_cos_sq_theta, new_theta):
         data_vars=dict(
             electron_yield=(['cos_sq_theta', 'energy'], nexafs_ep.values)),
         coords={'cos_sq_theta': new_cos_sq_theta, 'theta': (
-            'cos_sq_theta', new_theta), 'energy': nexafs_ep.energy},
-        attrs=dict(description=nexafs.description, name=nexafs.name),
+            'cos_sq_theta', new_theta), 'energy': nexafs_ep.energy}
+        # attrs=dict(description=nexafs.description, name=nexafs.name),
     )
     nexafs_ep.energy.attrs['unit'] = 'eV'
     nexafs_ep['electron_yield'].attrs['unit'] = 'a.u.'
