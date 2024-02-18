@@ -5,12 +5,14 @@ sample_sets_info.xlsx
 *imgs_analysis*
 /morph_gen/sim_morphs/*
 /beamline_data/*
+trexs_plots/*
 .DS_Store
 __pycache__
 test*
 job*
 *.pptx
 mask*
+learning_resources/*
 prsoxs_plots/*
 nexafs_plots/*
 afm_data/*
