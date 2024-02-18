@@ -12,7 +12,7 @@ test*
 job*
 *.pptx
 mask*
-learning_resources/*
+/learning_resources/*
 prsoxs_plots/*
 nexafs_plots/*
 afm_data/*
