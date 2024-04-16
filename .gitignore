@@ -19,3 +19,6 @@ afm_data/*
 auto-summaries/*
 *analysis_*
 testing*
+images_data*
+gi-trexs_plots*
+
