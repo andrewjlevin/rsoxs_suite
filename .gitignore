@@ -21,4 +21,7 @@ auto-summaries/*
 testing*
 images_data*
 gi-trexs_plots*
+*open3d*
+*nofuzz_fibril*
+*_diam*
 
