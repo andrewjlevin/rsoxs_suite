@@ -26,7 +26,7 @@ def sq(pos,qs):
     ### number of atoms in fibril to be simulated
     natoms = len(pos)
     ### calculate contribution to scattering for each pair of atom
-    for i in tqdm(range(natoms)):
+    for i in range(natoms):
         ### find displacements from current points to all subsequent points
         ### prevents double counting of displacements
         all_disp = pos[i,:]-pos[(i+1):,:]
