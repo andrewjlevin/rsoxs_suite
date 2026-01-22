@@ -315,7 +315,7 @@ def gen_fuzzy_scat(fuzz_dens, fuzz_length, coords, css, diam):
         scat_coords.append(axis_pos + css_x_norm*rand_x + css_y_norm*rand_y)
     return np.array(scat_coords)
 
-def gen_scat_coords_flexcyl(e_dens,length,unitL,diam,sigma,fuzz_dens,fuzz_length,save_dir,i,verbose=False):
+def gen_scat_coords_flexcyl(e_dens, length, unitL, diam, sigma, fuzz_dens, fuzz_length):
     '''
     Generates a flexible cylinder using gen_snake_avoid() and gen_snake_scat().
     Returns an array of scattering points as 3D cartesian coordinates of units Å
@@ -327,23 +327,23 @@ def gen_scat_coords_flexcyl(e_dens,length,unitL,diam,sigma,fuzz_dens,fuzz_length
       diam = diameter of desired semiflexible cylinder
       sigma = std. deviation the angle (about 0) chosen for each unit length bend (rad)
       fuzz_length = length (radius-like) of fuzziness. ex: 10Å side chains extending from polymer
-      verbose = whether or not you want to have printed output of failed (intersecting) bends
+      fuzz_dens = 
     '''
     coords,axs,css = gen_snake_avoid(sigma,length,unitL,diam,verbose)
+    # save_name_coords = 'flex_backbone_coords' + str(i)
+    # save_name_axs = 'flex_backbone_axs' + str(i)
+    # save_name_css = 'flex_backbone_css' + str(i)
     
-    save_name_coords = 'flex_backbone_coords' + str(i)
-    save_name_axs = 'flex_backbone_axs' + str(i)
-    save_name_css = 'flex_backbone_css' + str(i)
+    # np.save(save_dir + save_name_coords + '.npy', coords)
+    # np.save(save_dir + save_name_axs + '.npy', axs)
+    # np.save(save_dir + save_name_css + '.npy', css)
+    core_scat = gen_snake_scat(e_dens, coords, css, diam)
     
-    np.save(save_dir + save_name_coords + '.npy', coords)
-    np.save(save_dir + save_name_axs + '.npy', axs)
-    np.save(save_dir + save_name_css + '.npy', css)
+    fuzz_scat = gen_fuzzy_scat(fuzz_dens,fuzz_length,coords,css,diam)
+    total_scat = np.vstack((core_scat, fuzz_scat))
     
+    # total_scat = core_scat
     
-    core_scat = gen_snake_scat(e_dens,coords,css,diam)
-    # fuzz_scat = gen_fuzzy_scat(fuzz_dens,fuzz_length,coords,css,diam)
-    # total_scat = np.vstack((core_scat, fuzz_scat))
-    total_scat = core_scat
     return total_scat
 
 import matplotlib
@@ -470,7 +470,7 @@ def seed_worker():
     process_seed = int.from_bytes(os.urandom(4), byteorder='big') ^ seed
     np.random.seed(process_seed)
     
-def generate_and_save_scat_coords(e_dens, length, unit_length, diameter, sigma,fuzz_dens,fuzz_length, save_dir, i):
+def generate_and_save_scat_coords(e_dens, length, unit_length, diameter, sigma, fuzz_dens, fuzz_length, save_dir, i):
     '''
     Generates scattering coordinates array for a specified fibril. 
     Wrapper for gen-scat_coords_flexcyl() 
